@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <include
+        layout="@layout/app_bar_nav_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@drawable/nav_back"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_nav_drawer"
+        app:itemIconTint="@color/drawer_icon"
+        app:itemTextColor="@color/drawer_item"
+        app:menu="@menu/activity_nav_drawer_drawer">
+
+        <RelativeLayout
+            android:id="@+id/imageHeaderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/fb_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/nav_back"/>
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/fb_profile_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="48dp"
+                android:src="@drawable/com_facebook_profile_picture_blank_square"
+                app:siBorderColor="@color/button_material_light"
+                app:siBorderWidth="4dp"/>
+
+            <TextView
+                android:id="@+id/fb_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/fb_profile"
+                android:layout_alignParentEnd="true"
+                android:padding="6dp"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/fb_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/fb_cover_image"
+                android:layout_alignEnd="@+id/fb_profile_name"
+                android:padding="6dp"
+                android:text="Profile"
+                android:textColor="@color/accentColor"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+
+        </RelativeLayout>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_Facebook"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:padding="12dp"
+            android:paddingRight="5dp"
+            />
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

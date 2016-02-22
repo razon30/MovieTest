@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Home"/>
+        <item
+            android:id="@+id/nav_boxoffice"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Box Office Movies"/>
+        <item
+            android:id="@+id/nav_upcoming"
+            android:icon="@drawable/ic_btn_collection"
+            android:title="Upcoming Movies"/>
+
+    </group>
+
+    <item android:title="Your Features">
+        <menu>
+            <item
+                android:id="@+id/nav_watchlist"
+                android:icon="@drawable/ic_btn_seen"
+                android:title="Watch List"/>
+            <item
+                android:id="@+id/nav_wishlist"
+                android:icon="@drawable/ic_action_watchlist"
+                android:title="Wish List"/>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share"/>
+        </menu>
+    </item>
+
+</menu>

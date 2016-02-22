@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.razon30.movietest.MovieDetails"
+    tools:showIn="@layout/activity_person_details">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="5dp"
+        app:cardElevation="4dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                android:id="@+id/expandableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ael_duration="500"
+                app:ael_interpolator="bounce"
+                app:ael_orientation="vertical">
+
+                <com.beardedhen.androidbootstrap.BootstrapButton
+                    android:id="@+id/tvBiography"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:enabled="false"
+                    app:bootstrapBrand="primary"
+                    app:bootstrapSize="md"
+                    app:roundedCorners="true"
+                    app:showOutline="true"/>
+
+            </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/moreorless"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:paddingBottom="10dp"
+                android:paddingRight="8dp"
+                android:paddingTop="30dp"
+                android:textColor="#212121"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="md"
+                app:roundedCorners="true"
+                />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="5dp"
+        app:cardElevation="4dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:enabled="false"
+                android:paddingBottom="10dp"
+                android:paddingRight="8dp"
+                android:paddingTop="30dp"
+                android:textColor="#212121"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:bootstrapText="Personal Details  {fa_file}"
+                app:roundedCorners="true"
+                app:showOutline="false"
+                />
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="5dp"
+                app:cardElevation="4dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:bootstrapText="Birthday  {fa_birthday_cake}"
+                        app:roundedCorners="true"
+                        app:showOutline="false"
+                        />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/personBirthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:roundedCorners="true"
+                        app:showOutline="true"
+                        />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="5dp"
+                app:cardElevation="4dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:bootstrapText="Birth Place  {fa_home}"
+                        app:roundedCorners="true"
+                        app:showOutline="false"
+                        />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/personBirthPlace"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:roundedCorners="true"
+                        app:showOutline="true"
+                        />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="5dp"
+                app:cardElevation="4dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:bootstrapText="Height  {fa_text_height}"
+                        app:roundedCorners="true"
+                        app:showOutline="false"
+                        />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/personHeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:roundedCorners="true"
+                        app:showOutline="true"
+                        />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="5dp"
+                app:cardElevation="4dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:bootstrapText="Star Sign  {fa_star}"
+                        app:roundedCorners="true"
+                        app:showOutline="false"
+                        />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/personStarSign"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:enabled="false"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="30dp"
+                        android:textColor="#212121"
+                        app:bootstrapBrand="primary"
+                        app:bootstrapSize="md"
+                        app:roundedCorners="true"
+                        app:showOutline="true"
+                        />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="5dp"
+        app:cardElevation="4dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:paddingBottom="10dp"
+                android:paddingRight="8dp"
+                android:paddingTop="30dp"
+                android:textColor="#212121"
+                android:enabled="false"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="md"
+                app:roundedCorners="true"
+                app:showOutline="false"
+                app:bootstrapText="{fa_money} Salary and Movie {fa_file_movie_o}"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/personMovieandSallary"
+                android:layout_width="match_parent"
+                android:layout_height="320dp">
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <include
+        layout="@layout/personimage"></include>
+
+
+</LinearLayout>
