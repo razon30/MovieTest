@@ -1,7 +1,6 @@
 package com.example.razon30.movietest;
 
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,37 +9,30 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.speech.RecognizerIntent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,25 +47,18 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.Firebase;
 import com.github.mrengineer13.snackbar.SnackBar;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.quinny898.library.persistentsearch.SearchBox;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 
 
 public class HomeActivity extends AppCompatActivity
@@ -111,9 +96,6 @@ public class HomeActivity extends AppCompatActivity
     private SearchBox search;
 
 
-    //for alarm job
-    private static final int JOB_ID = 100;
-   // JobScheduler jobScheduler;
 
 
     @Override
@@ -122,6 +104,7 @@ public class HomeActivity extends AppCompatActivity
         //for facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+        Firebase.setAndroidContext(HomeActivity.this);
         setContentView(R.layout.activity_nav_drawer);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         movieDB = new MovieDB(HomeActivity.this);
@@ -264,11 +247,6 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    private void worksOnJob() {
-
-
-
-    }
 
     private void worksOnSearch() {
 
@@ -486,9 +464,13 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_watchlist) {
 
-            startActivity(new Intent(this, MovieDetails.class));
+           // startActivity(new Intent(this, MovieDetails.class));
+            ArrayList<Movie> watch_list = movieDB.searchWatch();
+            worksOnWatchList(watch_list);
 
         } else if (id == R.id.nav_wishlist) {
+            ArrayList<Movie> wish_list = movieDB.searchWish();
+            worksOnWishList(wish_list);
 
         } else if (id == R.id.nav_share) {
             //  loginButton.performClick();
@@ -497,6 +479,170 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void worksOnWishList(final ArrayList<Movie> watch_list) {
+
+        View view1 = getLayoutInflater().inflate(R.layout.watch_wish_list,
+                null);
+        ListView listView = (ListView) view1.findViewById(R.id.watch_list);
+        BaseAdapter adapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return watch_list.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return watch_list.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View view, ViewGroup parent) {
+
+                view = getLayoutInflater().inflate(R.layout.watch_wish_item,
+                        null);
+
+                TextView textView = (TextView) view.findViewById(R.id.watchwltv);
+                TextView time = (TextView) view.findViewById(R.id.timeoftimedetails);
+                TextView date = (TextView) view.findViewById(R.id.dateoftimedetails);
+
+                textView.setText(watch_list.get(position).getCoverImage());
+                time.setText(watch_list.get(position).getUserName());
+                date.setText(watch_list.get(position).getProfileLink());
+
+                return view;
+            }
+        };
+
+        listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String m_id = watch_list.get(position).getProfileImage();
+                // String link = movie.getVideoURL();
+
+
+                if (m_id != null && m_id.length() != 0) {
+                    // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+                    Intent intent = new Intent(HomeActivity.this, MovieDetails.class);
+                    intent.putExtra("tv", m_id);
+                    startActivity(intent);
+                } else {
+                    return;
+                }
+
+            }
+        });
+
+        AlertDialog.Builder builderAlertDialog = new AlertDialog.Builder(
+                HomeActivity.this);
+
+        if (watch_list == null || watch_list.size() == 0) {
+            new SnackBar.Builder(HomeActivity.this)
+                    .withMessage("No Wish List Found") // OR
+                    .withTextColorId(R.color.white_overlay)
+                    .withBackgroundColorId(R.color.colorAccent)
+                    .withTypeFace(Typeface.SANS_SERIF)
+                    .show();
+
+        } else {
+
+            builderAlertDialog
+                    .setView(view1)
+                    .show();
+        }
+
+
+    }
+
+    private void worksOnWatchList(final ArrayList<Movie> watch_wish_list) {
+
+        View view1 = getLayoutInflater().inflate(R.layout.watch_wish_list,
+                null);
+        ListView listView = (ListView) view1.findViewById(R.id.watch_list);
+        BaseAdapter adapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return watch_wish_list.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return watch_wish_list.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View view, ViewGroup parent) {
+
+                view = getLayoutInflater().inflate(R.layout.watch_wish_item,
+                        null);
+                TextView textView = (TextView) view.findViewById(R.id.watchwltv);
+
+                textView.setText(watch_wish_list.get(position).getMovie_name());
+                TextView time = (TextView) view.findViewById(R.id.timeoftimedetails);
+                TextView date = (TextView) view.findViewById(R.id.dateoftimedetails);
+                time.setVisibility(View.GONE);
+                date.setVisibility(View.GONE);
+
+                return view;
+            }
+        };
+
+        listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String m_id = watch_wish_list.get(position).getMovie_id();
+                // String link = movie.getVideoURL();
+
+
+                if (m_id != null && m_id.length() != 0) {
+                    // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+                    Intent intent = new Intent(HomeActivity.this, MovieDetails.class);
+                    intent.putExtra("tv", m_id);
+                    startActivity(intent);
+                } else {
+                    return;
+                }
+
+            }
+        });
+
+
+        AlertDialog.Builder builderAlertDialog = new AlertDialog.Builder(
+                HomeActivity.this);
+
+        if (watch_wish_list == null || watch_wish_list.size() == 0) {
+            new SnackBar.Builder(HomeActivity.this)
+                    .withMessage("List is Empty") // OR
+                    .withTextColorId(R.color.white_overlay)
+                    .withBackgroundColorId(R.color.primaryColor)
+                    .withTypeFace(Typeface.SANS_SERIF)
+                    .show();
+
+        } else {
+
+            builderAlertDialog
+                    .setView(view1)
+                    .show();
+        }
+
+    }
+
 
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -515,6 +661,8 @@ public class HomeActivity extends AppCompatActivity
                     return new FragmentBoxOffice();
                 case 2:
                     return new FragmentUpcoming();
+                case 3:
+                    return new FragmentDownload();
             }
         }
 
@@ -522,7 +670,7 @@ public class HomeActivity extends AppCompatActivity
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -534,6 +682,8 @@ public class HomeActivity extends AppCompatActivity
                     return "Box Office";
                 case 2:
                     return "Upcoming";
+                case 3:
+                    return "Download";
             }
             return null;
         }

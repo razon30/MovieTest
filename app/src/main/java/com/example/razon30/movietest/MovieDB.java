@@ -193,9 +193,9 @@ public class MovieDB extends SQLiteOpenHelper {
             for (int i = 0; i < cursor.getCount(); i++) {
 
                 String name = cursor.getString(cursor
-                        .getColumnIndex(W_ID));
-                String link = cursor.getString(cursor
                         .getColumnIndex(W_NAME));
+                String link = cursor.getString(cursor
+                        .getColumnIndex(W_ID));
 
                 Movie movie = new Movie(name, link);
 
@@ -300,9 +300,9 @@ public class MovieDB extends SQLiteOpenHelper {
             for (int i = 0; i < cursor.getCount(); i++) {
 
                 String name = cursor.getString(cursor
-                        .getColumnIndex(W_ID));
-                String link = cursor.getString(cursor
                         .getColumnIndex(W_NAME));
+                String link = cursor.getString(cursor
+                        .getColumnIndex(W_ID));
                 String time = cursor.getString(cursor.getColumnIndex(W_TIME));
                 String date = cursor.getString(cursor.getColumnIndex(W_DATE));
 

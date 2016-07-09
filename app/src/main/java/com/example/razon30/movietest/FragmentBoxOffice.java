@@ -2,7 +2,6 @@ package com.example.razon30.movietest;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,14 +27,6 @@ import java.util.Random;
 
 
 public class FragmentBoxOffice extends Fragment implements Sort{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     String image_url = "http://image.tmdb.org/t/p/w500";
     private RecyclerView listMovieHits;
@@ -317,22 +308,10 @@ public class FragmentBoxOffice extends Fragment implements Sort{
     }
 
 
-    public static FragmentBoxOffice newInstance(String param1, String param2) {
-        FragmentBoxOffice fragment = new FragmentBoxOffice();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     public interface ClickListener {

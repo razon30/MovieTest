@@ -1,6 +1,7 @@
 package com.example.razon30.movietest;
 
-import android.app.ProgressDialog;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +24,6 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,13 +36,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.BootstrapText;
-import com.beardedhen.androidbootstrap.BootstrapThumbnail;
-import com.beardedhen.androidbootstrap.api.attributes.BootstrapBrand;
 import com.beardedhen.androidbootstrap.api.defaults.DefaultBootstrapBrand;
-import com.beardedhen.androidbootstrap.api.defaults.DefaultBootstrapHeading;
 import com.beardedhen.androidbootstrap.font.FontAwesome;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -72,8 +67,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
-
-import dmax.dialog.SpotsDialog;
 
 public class MovieDetails extends AppCompatActivity {
 
@@ -143,6 +136,9 @@ public class MovieDetails extends AppCompatActivity {
     ArrayList<Movie> popularCastandCrew;
     AdapterProductionList adapterProductionList;
 
+    private PendingIntent pendingIntent;
+    AlarmManager alarmManager;
+
 
     //for loading
     View view1;
@@ -158,6 +154,8 @@ public class MovieDetails extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 
         view1 = getLayoutInflater().inflate(R.layout.dialogue_element, null);
@@ -544,7 +542,7 @@ public class MovieDetails extends AppCompatActivity {
                         public void onClick(View v) {
                             watch.setBootstrapBrand(DefaultBootstrapBrand.SUCCESS);
                             watch.setBootstrapText(new BootstrapText.Builder(MovieDetails.this)
-                                    .addText("Add to Watch")
+                                    .addText("Add to Watch ")
                                     .addFontAwesomeIcon(FontAwesome.FA_THUMBS_O_UP).build());
                             movieDB.deleteWatch(w_id);
                             dialog.dismiss();
@@ -563,7 +561,7 @@ public class MovieDetails extends AppCompatActivity {
                     if (fact != -1) {
                         watch.setBootstrapBrand(DefaultBootstrapBrand.DANGER);
                         watch.setBootstrapText(new BootstrapText.Builder(MovieDetails.this).addText
-                                ("Seen Movie")
+                                ("Seen Movie ")
                                 .addFontAwesomeIcon(FontAwesome.FA_THUMBS_O_DOWN).build());
                         remove.setVisibility(View.GONE);
 
@@ -615,7 +613,7 @@ public class MovieDetails extends AppCompatActivity {
                                     wish.setBootstrapBrand(DefaultBootstrapBrand.PRIMARY);
                                     wish.setBootstrapText(new BootstrapText.Builder(MovieDetails
                                             .this).addText
-                                            ("Add To Wish")
+                                            ("Add To Wish ")
                                             .addFontAwesomeIcon(FontAwesome.FA_HEART).build());
                                 }
                             })
@@ -629,7 +627,7 @@ public class MovieDetails extends AppCompatActivity {
                         wish.setBootstrapBrand(DefaultBootstrapBrand.DANGER);
                         wish.setBootstrapText(new BootstrapText.Builder(MovieDetails
                                 .this).addText
-                                ("Wished Movie")
+                                ("Wished Movie ")
                                 .addFontAwesomeIcon(FontAwesome.FA_HEARTBEAT).build());
                         new SnackBar.Builder(MovieDetails.this)
                                 .withMessage("Added to Wish List") // OR
@@ -718,6 +716,13 @@ public class MovieDetails extends AppCompatActivity {
                 int hour = timePicker.getCurrentHour();
                 int minute = timePicker.getCurrentMinute();
                 String time = setTime(hour, minute);
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                Intent myIntent = new Intent(MovieDetails.this, AlarmReceiver.class);
+                pendingIntent = PendingIntent.getBroadcast(MovieDetails.this, 0, myIntent, 0);
+                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
                 Movie movie = new Movie(movie_name, movie_ID, time, date);
                 movieDB.insertWish(movie);
@@ -1043,10 +1048,6 @@ public class MovieDetails extends AppCompatActivity {
                             for (int i = 0; i < produc.length(); i++) {
 
                                 JSONObject p = produc.getJSONObject(i);
-//                                production.append(p.getString("name"));
-//                                if (i < produc.length() - 1) {
-//                                    production.append("\n");
-//                                }
                                 proList.add(p.getString("name").toString());
 
                             }
@@ -1105,15 +1106,6 @@ public class MovieDetails extends AppCompatActivity {
                             releaseDateBootstrap.setBootstrapText(new BootstrapText.Builder(MovieDetails.this)
                                     .addFontAwesomeIcon(FontAwesome.FA_FILE_ARCHIVE_O)
                                     .addText("   " + sb.toString()).build());
-
-//                            if (tagLine != null && tagLine.length() != 0 && tagLine != "") {
-//                                tvTagLine.setVisibility(View.VISIBLE);
-//                                tvTagLine.setBootstrapText(new BootstrapText.Builder(MovieDetails.this)
-//                                        .addFontAwesomeIcon(FontAwesome.FA_FILE_ARCHIVE_O)
-//                                        .addText("   " + tagLine).build());
-//                            } else {
-//                                tvTagLine.setVisibility(View.GONE);
-//                            }
 
 
                         } catch (Exception e) {
